@@ -40,10 +40,11 @@ def is_fungi(id):
 # main loop
 # for every file in that folder
 for s in os.listdir(pjoin(path, "1000_processed_reads/")):
+    print("Doing sample",s)
     reads_path = pjoin(path, "1000_processed_reads/", s, "reads")
     kaiju_path = pjoin(reads_path, "kaiju", 'nr_euk_mycocosm')
-    # check to make sure it has some kaiju results
-    if os.path.exists(kaiju_path):
+    # check to make sure it has some kaiju results and the output folder does not exist yet (e.g. I do not want to rerun stuff)
+    if os.path.exists(kaiju_path) and not os.path.exists(pjoin(reads_path, "fungi")):
         # open the kaiju results file
         with open(pjoin(kaiju_path, s + ".kaiju")) as handle:
             # the actual parsing returns a dictionary with the read ID and the taxon ID it has, only for the lines that starts with "C" and "is_fungi"
